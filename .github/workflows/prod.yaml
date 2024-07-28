@@ -1,15 +1,14 @@
-name: Build and deploy 
+name: Deploy prod 
 permissions: write-all
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: ["main"]
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
   workflow_dispatch: {}
 
 jobs:
   run:
-    uses: "evgsh123/otusproject-apps-cd/.github/workflows/workflow.yaml@main"
+    uses: "evgsh123/otusproject-apps-cd/.github/workflows/prod.yaml@main"
     with:
       name: "loadGenerator"
       JOBID: "${{ github.run_number }}"
@@ -18,4 +17,3 @@ jobs:
       YC_SA_JSON_CREDENTIALS: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
       REPO_NAME: ${{ secrets.REPO_NAME }}
       MYGITHUB_TOKEN: ${{ secrets.MYGITHUB_TOKEN }}
-
